@@ -39,10 +39,10 @@ export CNTRANSCRIBE_QWEN_ALIGNER=Qwen/Qwen3-ForcedAligner-0.6B
 
 ```bash
 # Default:
-export CNTRANSCRIBE_MLX_MODEL=mlx-community/Qwen3-4B-Instruct-2507-8bit
+export CNTRANSCRIBE_MLX_MODEL=mlx-community/Qwen3-4B-8bit
 # Alternatives:
 # export CNTRANSCRIBE_MLX_MODEL=mlx-community/Qwen3-1.7B-4bit
-# export CNTRANSCRIBE_MLX_MODEL=mlx-community/Qwen3-4B-8bit
+# export CNTRANSCRIBE_MLX_MODEL=mlx-community/Qwen3-4B-Instruct-2507-8bit
 ```
 
 ## Run

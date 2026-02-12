@@ -473,7 +473,14 @@ class ChineseTranscriptionPipeline:
         aligner_name = os.getenv("CNTRANSCRIBE_QWEN_ALIGNER", "Qwen/Qwen3-ForcedAligner-0.6B")
         selected_mlx_model = mlx_model_name or os.getenv(
             "CNTRANSCRIBE_MLX_MODEL",
-            "mlx-community/Qwen3-4B-Instruct-2507-8bit",
+            "mlx-community/Qwen3-4B-8bit",
+        )
+        self._logger.info(
+            "Pipeline config: ASR=%s aligner=%s translation_backend=%s mlx_model=%s",
+            selected_asr_model,
+            aligner_name,
+            translation_backend,
+            selected_mlx_model,
         )
 
         with tempfile.TemporaryDirectory(prefix="cntranscribe-") as tmpdir:
@@ -547,6 +554,11 @@ class ChineseTranscriptionPipeline:
                     selected_backend = "hf"
                     warnings.append(f"MLX translation backend unavailable, fell back to HF model: {exc}")
                     self._logger.warning("MLX unavailable, falling back to HF: %s", exc)
+            self._logger.info(
+                "Resolved translation stack: backend=%s model=%s",
+                selected_backend,
+                selected_mlx_model if selected_backend == "mlx" else "Helsinki-NLP/opus-mt-zh-en",
+            )
 
             outputs: list[SegmentOutput] = []
             total = max(1, len(raw_segments))
