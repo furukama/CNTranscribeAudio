@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chinese Audio Transcriber</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="panel input-panel">
+        <h1>Chinese YouTube Transcriber</h1>
+        <p class="subhead">
+          Paste a YouTube URL to generate Chinese transcript, pinyin, word-level English glosses,
+          and fluent English translation with timestamps.
+        </p>
+
+        <form id="transcribe-form" class="form">
+          <label for="youtube-url">YouTube URL</label>
+          <div class="url-row">
+            <input id="youtube-url" name="youtube-url" type="url" value="https://www.youtube.com/watch?v=KuJQn6eeKD0&t=365s" placeholder="https://www.youtube.com/watch?v=..." required />
+            <button type="submit" id="submit-btn">Transcribe</button>
+          </div>
+          <label class="inline-toggle" for="use-mlx">
+            <input id="use-mlx" name="use-mlx" type="checkbox" checked />
+            Use MLX-LM for translation (Apple Silicon local)
+          </label>
+        </form>
+
+        <div id="status" class="status"></div>
+        <div id="progress-wrap" class="progress-wrap hidden">
+          <div class="progress-head">
+            <span id="progress-label">Starting...</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel results-panel">
+        <div class="sync-grid">
+          <article class="video-column">
+            <h2>Video</h2>
+            <div class="player-shell">
+              <div id="youtube-player"></div>
+            </div>
+            <p class="subhead">Use timestamps and pause jump marks to seek the video.</p>
+          </article>
+
+          <article class="transcript-column">
+            <h2>Synced Transcript</h2>
+            <div class="tab-bar">
+              <button type="button" class="tab-btn active" data-tab="chinese">Chinese</button>
+              <button type="button" class="tab-btn" data-tab="interlinear">Word by Word</button>
+              <button type="button" class="tab-btn" data-tab="english">English</button>
+            </div>
+            <div id="tab-chinese" class="output tab-panel"></div>
+            <div id="tab-interlinear" class="output tab-panel hidden"></div>
+            <div id="tab-english" class="output tab-panel hidden"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

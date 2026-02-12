@@ -1,0 +1,58 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1530" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1426"/>
+      <stop offset="0.5" stop-color="#132B47"/>
+      <stop offset="1" stop-color="#0F1E34"/>
+    </linearGradient>
+    <radialGradient id="pulse" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1210 120) rotate(130) scale(640 410)">
+      <stop stop-color="#00D1FF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#00D1FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="signal" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1290 760) rotate(158) scale(560 380)">
+      <stop stop-color="#FF4E45" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FF4E45" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="398" y1="205" x2="1117" y2="748" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#CBE6FF" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#7FD9FF" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#7A8CFF" stop-opacity="0.85"/>
+    </linearGradient>
+    <filter id="glow" x="286" y="130" width="956" height="720" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#pulse)"/>
+  <rect width="1600" height="900" fill="url(#signal)"/>
+
+  <g opacity="0.22">
+    <path d="M140 780L680 250" stroke="#6DD6FF" stroke-width="2"/>
+    <path d="M290 840L830 310" stroke="#6DD6FF" stroke-width="1.5"/>
+    <path d="M890 840L1430 310" stroke="#FF6B63" stroke-width="1.5"/>
+    <path d="M1040 780L1580 250" stroke="#FF6B63" stroke-width="2"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <circle cx="800" cy="450" r="270" stroke="url(#ring)" stroke-width="30"/>
+
+    <path d="M800 180C948 180 1068 300 1068 448C1068 596 948 716 800 716V180Z" fill="#0A1324"/>
+    <path d="M800 180C652 180 532 300 532 448C532 596 652 716 800 716V180Z" fill="#EAF4FF"/>
+
+    <circle cx="800" cy="314" r="68" fill="#EAF4FF"/>
+    <circle cx="800" cy="582" r="68" fill="#0A1324"/>
+
+    <circle cx="800" cy="314" r="24" fill="#0A1324"/>
+    <circle cx="800" cy="582" r="24" fill="#EAF4FF"/>
+  </g>
+
+  <g>
+    <rect x="150" y="116" width="322" height="48" rx="24" fill="#EAF4FF" fill-opacity="0.12" stroke="#7BD8FF"/>
+    <text x="178" y="148" fill="#DFF3FF" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="24" font-weight="700">CNTranscribeAudio</text>
+
+    <text x="150" y="742" fill="#CBE6FF" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="44" font-weight="700">Supermodernism x Taiji</text>
+    <text x="150" y="788" fill="#9EC4E9" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="26">Chinese ASR • Pinyin • Word-by-Word • Synced Video</text>
+  </g>
+</svg>

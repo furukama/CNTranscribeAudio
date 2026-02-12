@@ -1,0 +1,23 @@
+[project]
+name = "cntranscribeaudio"
+version = "0.1.0"
+description = "Browser app for Chinese YouTube transcription with pinyin and English translation"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "python-multipart>=0.0.20",
+    "yt-dlp>=2025.8.11",
+    "transformers>=4.56.0",
+    "torch>=2.2,<2.8",
+    "jieba>=0.42.1",
+    "pypinyin>=0.55.0",
+    "sacremoses>=0.1.1",
+    "sentencepiece>=0.2.0",
+    "qwen-asr @ git+https://github.com/QwenLM/Qwen3-ASR.git",
+    "mlx-lm>=0.20.0; platform_system == 'Darwin'",
+]
+
+[project.scripts]
+cntranscribeaudio = "main:main"

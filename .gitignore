@@ -1,0 +1,38 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Local secrets / credentials
+.env
+.env.*
+*.env
+secrets.*
+*.secrets
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Local auth/token caches
+.huggingface/
+.cache/
+.tokens/
+token.json
+
+# Local runtime artifacts
+*.log
+tmp/
+downloads/
+audio/
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/
