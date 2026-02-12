@@ -36,16 +36,22 @@
   </g>
 
   <g filter="url(#glow)">
-    <circle cx="800" cy="450" r="270" stroke="url(#ring)" stroke-width="30"/>
+    <circle cx="800" cy="450" r="272" stroke="url(#ring)" stroke-width="26"/>
+    <circle cx="800" cy="450" r="214" stroke="#A5D9FF" stroke-opacity="0.5" stroke-width="10"/>
+    <circle cx="800" cy="450" r="156" stroke="#6AA8FF" stroke-opacity="0.34" stroke-width="8"/>
 
-    <path d="M800 180C948 180 1068 300 1068 448C1068 596 948 716 800 716V180Z" fill="#0A1324"/>
-    <path d="M800 180C652 180 532 300 532 448C532 596 652 716 800 716V180Z" fill="#EAF4FF"/>
+    <path d="M605 420C640 292 760 232 854 258C950 285 1020 360 1004 468C988 578 900 654 802 656C716 658 642 610 606 546"
+      stroke="#EAF4FF" stroke-opacity="0.9" stroke-width="28" stroke-linecap="round"/>
+    <path d="M995 476C961 607 841 669 746 642C649 615 580 540 595 432C610 322 700 247 798 244C883 241 958 290 994 354"
+      stroke="#0D172A" stroke-opacity="0.86" stroke-width="28" stroke-linecap="round"/>
 
-    <circle cx="800" cy="314" r="68" fill="#EAF4FF"/>
-    <circle cx="800" cy="582" r="68" fill="#0A1324"/>
+    <circle cx="738" cy="362" r="30" fill="#EAF4FF" fill-opacity="0.92"/>
+    <circle cx="866" cy="540" r="30" fill="#0D172A" fill-opacity="0.9"/>
 
-    <circle cx="800" cy="314" r="24" fill="#0A1324"/>
-    <circle cx="800" cy="582" r="24" fill="#EAF4FF"/>
+    <circle cx="738" cy="362" r="10" fill="#111E36"/>
+    <circle cx="866" cy="540" r="10" fill="#EAF4FF"/>
+
+    <path d="M676 706L924 706" stroke="#89C9FF" stroke-opacity="0.52" stroke-width="6" stroke-linecap="round"/>
   </g>
 
   <g>
