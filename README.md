@@ -1,6 +1,6 @@
-# CNTranscribeAudio
+# Chinese Video Transcription Studio
 
-![CNTranscribeAudio Hero](assets/modernist-taiji-hero.svg)
+![Chinese Video Transcription Studio Hero](assets/modernist-taiji-hero.svg)
 
 Browser app to transcribe Chinese speech from a YouTube URL and display:
 - Chinese transcript with timestamps
@@ -22,8 +22,6 @@ Browser app to transcribe Chinese speech from a YouTube URL and display:
 ## Install
 
 ```bash
-uv python install 3.10
-uv venv --python 3.10
 uv sync
 ```
 

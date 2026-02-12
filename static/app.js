@@ -15,6 +15,11 @@ const progressBar = document.getElementById("progress-bar");
 const STORAGE_LAST_RESULT = "cntranscribe:last_result:v1";
 const STORAGE_LAST_URL = "cntranscribe:last_url:v1";
 const STORAGE_LAST_MLX = "cntranscribe:last_use_mlx:v1";
+const DEBUG_CLIP_DURATION_SECONDS = 60;
+const FALLBACK_SECONDS_PER_SEGMENT = 6;
+const MIN_PAUSE_JUMP_SECONDS = 1.25;
+const SYNC_INTERVAL_MS = 350;
+const INTERLINEAR_TOKENS_PER_ROW = 8;
 
 let ytPlayer = null;
 let ytReadyPromise = null;
@@ -46,13 +51,14 @@ function ensureSegmentTimes(segments, totalDurationHint = null, warnings = []) {
       ? warnings.find((w) => typeof w === "string" && w.includes("first 60 seconds"))
       : null;
     if (debugWarning) {
-      totalDuration = 60;
+      totalDuration = DEBUG_CLIP_DURATION_SECONDS;
     }
   }
 
   if (segments.length === 1) {
     segments[0].start = 0;
-    segments[0].end = Number.isFinite(totalDuration) && totalDuration > 0 ? totalDuration : 60;
+    segments[0].end =
+      Number.isFinite(totalDuration) && totalDuration > 0 ? totalDuration : DEBUG_CLIP_DURATION_SECONDS;
     return;
   }
 
@@ -65,7 +71,10 @@ function ensureSegmentTimes(segments, totalDurationHint = null, warnings = []) {
     totalWeight += w;
   }
 
-  const fallbackDuration = Number.isFinite(totalDuration) && totalDuration > 0 ? totalDuration : segments.length * 6;
+  const fallbackDuration =
+    Number.isFinite(totalDuration) && totalDuration > 0
+      ? totalDuration
+      : segments.length * FALLBACK_SECONDS_PER_SEGMENT;
   for (let i = 0; i < segments.length; i += 1) {
     const seg = segments[i];
     const textLen = (seg.chinese || "").length;
@@ -138,7 +147,7 @@ function maybeAddPauseJump(container, previousSegment, nextSegment) {
   }
 
   const gapSeconds = nextSegment.start - previousSegment.end;
-  if (gapSeconds < 1.25) {
+  if (gapSeconds < MIN_PAUSE_JUMP_SECONDS) {
     return;
   }
 
@@ -323,7 +332,7 @@ function startSyncLoop() {
     const now = ytPlayer.getCurrentTime();
     const activeIndex = findSegmentIndexForTime(now);
     setActiveSegment(activeIndex);
-  }, 350);
+  }, SYNC_INTERVAL_MS);
 }
 
 function findSegmentIndexForTime(now) {
@@ -424,9 +433,8 @@ function buildInterlinearCard(segment) {
   const tokens = segment.tokens.length
     ? segment.tokens
     : [{ word: segment.chinese, pinyin: "", english: segment.full_english || "" }];
-  const TOKENS_PER_ROW = 8;
-  for (let i = 0; i < tokens.length; i += TOKENS_PER_ROW) {
-    const chunk = tokens.slice(i, i + TOKENS_PER_ROW);
+  for (let i = 0; i < tokens.length; i += INTERLINEAR_TOKENS_PER_ROW) {
+    const chunk = tokens.slice(i, i + INTERLINEAR_TOKENS_PER_ROW);
     const cols = `repeat(${chunk.length}, minmax(72px, 1fr))`;
 
     const lineZh = document.createElement("div");
@@ -459,7 +467,7 @@ function buildInterlinearCard(segment) {
     interlinear.appendChild(linePy);
     interlinear.appendChild(lineEn);
 
-    if (i + TOKENS_PER_ROW < tokens.length) {
+    if (i + INTERLINEAR_TOKENS_PER_ROW < tokens.length) {
       const sep = document.createElement("hr");
       sep.className = "interlinear-sep";
       interlinear.appendChild(sep);

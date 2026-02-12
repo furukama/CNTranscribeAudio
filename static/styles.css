@@ -1,7 +1,7 @@
 :root {
   --bg: #eaf0f8;
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-2: rgba(250, 253, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.58);
+  --surface-2: rgba(250, 253, 255, 0.58);
   --ink: #0b1325;
   --muted: #4c5b74;
   --line: rgba(136, 168, 214, 0.35);
@@ -23,14 +23,15 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    conic-gradient(from 42deg at 84% 8%, rgba(112, 79, 255, 0.22), rgba(0, 207, 255, 0.14), transparent 45%),
-    radial-gradient(circle at 12% 14%, rgba(17, 17, 17, 0.12) 0%, transparent 24%),
-    radial-gradient(circle at 87% 12%, rgba(0, 207, 255, 0.22) 0%, transparent 32%),
-    radial-gradient(circle at 70% 84%, rgba(242, 72, 61, 0.18) 0%, transparent 32%),
-    radial-gradient(circle at 36% 74%, rgba(112, 79, 255, 0.13) 0%, transparent 28%),
+    conic-gradient(from 42deg at 84% 8%, rgba(112, 79, 255, 0.12), rgba(0, 207, 255, 0.08), transparent 45%),
+    radial-gradient(circle at 12% 14%, rgba(17, 17, 17, 0.07) 0%, transparent 24%),
+    radial-gradient(circle at 87% 12%, rgba(0, 207, 255, 0.1) 0%, transparent 32%),
+    radial-gradient(circle at 70% 84%, rgba(242, 72, 61, 0.09) 0%, transparent 32%),
+    radial-gradient(circle at 36% 74%, rgba(112, 79, 255, 0.07) 0%, transparent 28%),
     linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
   font-family: "Noto Sans SC", "PingFang SC", "Source Han Sans SC", sans-serif;
   background-attachment: fixed;
+  position: relative;
 }
 
 .layout {
@@ -38,6 +39,18 @@ body {
   margin: 1.2rem auto;
   display: grid;
   gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("/assets/modernist-taiji-bg.svg") center/cover no-repeat;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .panel {

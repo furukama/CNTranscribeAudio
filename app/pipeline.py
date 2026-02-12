@@ -22,6 +22,10 @@ ProgressCallback = Callable[[int, str], None]
 jieba.setLogLevel(logging.WARNING)
 jieba.initialize()
 
+SILENCE_DETECT_NOISE_DB = "-35dB"
+SILENCE_DETECT_MIN_DURATION_SECONDS = 0.45
+MIN_SPEECH_SEGMENT_SECONDS = 0.35
+
 
 @dataclass
 class WordToken:
@@ -223,7 +227,7 @@ class ChineseTranscriptionPipeline:
             "-i",
             str(audio_path),
             "-af",
-            "silencedetect=noise=-35dB:d=0.45",
+            f"silencedetect=noise={SILENCE_DETECT_NOISE_DB}:d={SILENCE_DETECT_MIN_DURATION_SECONDS}",
             "-f",
             "null",
             "-",
@@ -231,8 +235,8 @@ class ChineseTranscriptionPipeline:
         proc = subprocess.run(cmd, capture_output=True, text=True)
         log = f"{proc.stdout}\n{proc.stderr}"
 
-        starts = [float(v) for v in re.findall(r"silence_start:\\s*([0-9.]+)", log)]
-        ends = [float(v) for v in re.findall(r"silence_end:\\s*([0-9.]+)", log)]
+        starts = [float(v) for v in re.findall(r"silence_start:\s*([0-9.]+)", log)]
+        ends = [float(v) for v in re.findall(r"silence_end:\s*([0-9.]+)", log)]
         if not starts or not ends:
             return []
 
@@ -250,10 +254,10 @@ class ChineseTranscriptionPipeline:
         speech_ranges: list[tuple[float, float]] = []
         cursor = 0.0
         for s, e in silence_ranges:
-            if s - cursor >= 0.35:
+            if s - cursor >= MIN_SPEECH_SEGMENT_SECONDS:
                 speech_ranges.append((cursor, s))
             cursor = max(cursor, e)
-        if duration_seconds - cursor >= 0.35:
+        if duration_seconds - cursor >= MIN_SPEECH_SEGMENT_SECONDS:
             speech_ranges.append((cursor, duration_seconds))
         return speech_ranges
 
