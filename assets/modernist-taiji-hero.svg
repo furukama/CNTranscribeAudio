@@ -52,7 +52,7 @@
     <rect x="150" y="116" width="322" height="48" rx="24" fill="#EAF4FF" fill-opacity="0.12" stroke="#7BD8FF"/>
     <text x="178" y="148" fill="#DFF3FF" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="24" font-weight="700">CNTranscribeAudio</text>
 
-    <text x="150" y="742" fill="#CBE6FF" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="44" font-weight="700">Supermodernism x Taiji</text>
+    <text x="150" y="742" fill="#CBE6FF" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="44" font-weight="700">Chinese Video Transcription Studio</text>
     <text x="150" y="788" fill="#9EC4E9" font-family="'Noto Sans SC','PingFang SC',sans-serif" font-size="26">Chinese ASR • Pinyin • Word-by-Word • Synced Video</text>
   </g>
 </svg>

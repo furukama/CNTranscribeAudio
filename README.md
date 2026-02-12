@@ -1,5 +1,7 @@
 # CNTranscribeAudio
 
+![CNTranscribeAudio Hero](assets/modernist-taiji-hero.svg)
+
 Browser app to transcribe Chinese speech from a YouTube URL and display:
 - Chinese transcript with timestamps
 - Word-level Chinese + pinyin + English gloss
