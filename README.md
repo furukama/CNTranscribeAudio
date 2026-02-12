@@ -1,12 +1,21 @@
 # CNTranscribeAudio
 
-![CNTranscribeAudio Modernist Taiji Hero](assets/modernist-taiji-hero.svg)
-
 Browser app to transcribe Chinese speech from a YouTube URL and display:
 - Chinese transcript with timestamps
 - Word-level Chinese + pinyin + English gloss
 - Fluent English translation
 - Synced playback (YouTube player + auto-highlighted transcript)
+
+## Screenshots
+
+### English Tab
+![English Tab Screenshot](assets/english.png)
+
+### Chinese Tab
+![Chinese Tab Screenshot](assets/chinese.png)
+
+### Word by Word Tab
+![Word by Word Tab Screenshot](assets/word_by_word.png)
 
 ## Install
 
@@ -43,9 +52,6 @@ uv run main.py
 ```
 
 Open [http://127.0.0.1:8011](http://127.0.0.1:8011) (default in this project).
-
-The URL input is pre-filled with:
-`https://www.youtube.com/watch?v=KuJQn6eeKD0&t=365s`
 
 ## API
 
