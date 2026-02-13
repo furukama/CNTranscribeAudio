@@ -17,7 +17,6 @@ from app.pipeline import ChineseTranscriptionPipeline
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "static"
-ASSETS_DIR = BASE_DIR / "assets"
 
 if not logging.getLogger().handlers:
     logging.basicConfig(
@@ -28,9 +27,8 @@ if not logging.getLogger().handlers:
 # Silence noisy Transformers generation advisory warnings (e.g. invalid/ignored flags).
 logging.getLogger("transformers.generation.configuration_utils").setLevel(logging.ERROR)
 
-app = FastAPI(title="Chinese Video Transcription Studio", version="0.1.0")
+app = FastAPI(title="CN Transcribe Audio", version="0.1.0")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
 pipeline = ChineseTranscriptionPipeline()
 
@@ -42,8 +40,6 @@ class TranscribeRequest(BaseModel):
 
 jobs: dict[str, dict] = {}
 jobs_lock = threading.Lock()
-JOB_TTL_SECONDS = 60 * 60  # Keep completed/failed jobs for 1 hour.
-JOB_MAX_ITEMS = 500
 
 
 @app.get("/")
@@ -61,27 +57,6 @@ def _update_job(job_id: str, **kwargs) -> None:
         if job_id in jobs:
             jobs[job_id].update(kwargs)
             jobs[job_id]["updated_at"] = time.time()
-
-
-def _prune_jobs_locked(now: float) -> None:
-    stale_ids: list[str] = []
-    for jid, job in jobs.items():
-        status = job.get("status")
-        updated_at = float(job.get("updated_at") or now)
-        if status in {"completed", "failed"} and (now - updated_at) > JOB_TTL_SECONDS:
-            stale_ids.append(jid)
-
-    for jid in stale_ids:
-        jobs.pop(jid, None)
-
-    if len(jobs) <= JOB_MAX_ITEMS:
-        return
-
-    # If still above cap, evict oldest entries first.
-    oldest = sorted(jobs.items(), key=lambda item: float(item[1].get("updated_at") or now))
-    overflow = len(jobs) - JOB_MAX_ITEMS
-    for jid, _ in oldest[:overflow]:
-        jobs.pop(jid, None)
 
 
 def _run_job(job_id: str, youtube_url: str, translation_backend: str) -> None:
@@ -104,7 +79,6 @@ def transcribe_start(payload: TranscribeRequest) -> dict[str, str]:
     job_id = uuid.uuid4().hex
     now = time.time()
     with jobs_lock:
-        _prune_jobs_locked(now)
         jobs[job_id] = {
             "id": job_id,
             "status": "queued",
@@ -129,8 +103,18 @@ def transcribe_start(payload: TranscribeRequest) -> dict[str, str]:
 @app.get("/api/transcribe/{job_id}")
 def transcribe_status(job_id: str) -> dict:
     with jobs_lock:
-        _prune_jobs_locked(time.time())
         job = jobs.get(job_id)
         if job is None:
             raise HTTPException(status_code=404, detail="Job not found")
         return job
+
+
+@app.post("/api/transcribe")
+def transcribe(payload: TranscribeRequest) -> dict:
+    try:
+        return pipeline.run(
+            str(payload.youtube_url),
+            translation_backend=payload.translation_backend,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Transcription failed: {exc}") from exc
